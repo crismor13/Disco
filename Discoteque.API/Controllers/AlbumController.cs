@@ -21,7 +21,8 @@ public class AlbumController : ControllerBase
     public async Task<IActionResult> GetAlbums(bool areReferencesLoaded = false)
     {
         var messageResponse = await _albumService.GetAlbumsAsync(areReferencesLoaded);
-        return !messageResponse.EntitiesList.Any() ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There was not album found");
+        var responseList = messageResponse.EntitiesList;
+        return (responseList.Any() && responseList[0] != null) ?  Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There was not album found");
     }
 
     [HttpGet]
@@ -29,7 +30,8 @@ public class AlbumController : ControllerBase
     public async Task<IActionResult> GetById(int id)
     {
         var messageResponse = await _albumService.GetById(id);
-        return !messageResponse.EntitiesList.Any() ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There was not album found with this id");
+        var responseList = messageResponse.EntitiesList;
+        return (responseList.Any() && responseList[0] != null) ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There was not album found with this id");
     }
 
     [HttpGet]
@@ -37,7 +39,8 @@ public class AlbumController : ControllerBase
     public async Task<IActionResult> GetAlbumsByYear(int year)
     {
         var messageResponse = await _albumService.GetAlbumsByYear(year);
-        return !messageResponse.EntitiesList.Any() ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There were not albums found in this year");
+        var responseList = messageResponse.EntitiesList;
+        return (responseList.Any() && responseList[0] != null) ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There were not albums found in this year");
     }
 
     [HttpGet]
@@ -45,7 +48,8 @@ public class AlbumController : ControllerBase
     public async Task<IActionResult> GetAlbumsByYearRange(int initialYear, int yearRange)
     {
         var messageResponse = await _albumService.GetAlbumsByYearRange(initialYear, yearRange);
-        return !messageResponse.EntitiesList.Any() ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There were not albums found in this year range");
+        var responseList = messageResponse.EntitiesList;
+        return (responseList.Any() && responseList[0] != null) ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There were not albums found in this year range");
     }
 
     [HttpGet]
@@ -53,7 +57,8 @@ public class AlbumController : ControllerBase
     public async Task<IActionResult> GetAlbumsByGenre(Genres genre)
     {
         var messageResponse = await _albumService.GetAlbumsByGenre(genre);
-        return !messageResponse.EntitiesList.Any() ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There were not albums found in this genre");
+        var responseList = messageResponse.EntitiesList;
+        return (responseList.Any() && responseList[0] != null) ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There were not albums found in this genre");
     }
 
     [HttpGet]
@@ -61,7 +66,8 @@ public class AlbumController : ControllerBase
     public async Task<IActionResult> GetAlbumsByArtist(string artist)
     {
         var messageResponse = await _albumService.GetAlbumsByArtist(artist);
-        return !messageResponse.EntitiesList.Any() ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There were not albums by this artist");
+        var responseList = messageResponse.EntitiesList;
+        return (responseList.Any() && responseList[0] != null) ? Ok(messageResponse) : StatusCode(StatusCodes.Status404NotFound,  "There were not albums by this artist");
     }
 
     [HttpPost]
@@ -69,6 +75,7 @@ public class AlbumController : ControllerBase
     public async Task<IActionResult> CreateAlbumsAsync(Album album)
     {
         var messageResponse = await _albumService.CreateAlbum(album);
-        return !messageResponse.EntitiesList.Any() ? Ok(messageResponse) : StatusCode(StatusCodes.Status500InternalServerError,  "Ocurred an error while creating the album");
+        var responseList = messageResponse.EntitiesList;
+        return (responseList.Any() && responseList[0] != null) ? Ok(messageResponse) : StatusCode(StatusCodes.Status500InternalServerError,  "Ocurred an error while creating the album");
     }
 }
