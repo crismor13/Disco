@@ -13,29 +13,35 @@ namespace Discoteque.API.Controllers
     [ApiController]
     public class ArtistsController : ControllerBase
     {
-        private readonly IArtistService _artistService;
+        private readonly IArtistsService _artistsService;
 
-        public ArtistsController(IArtistService artistService)
+        public ArtistsController(IArtistsService artistsService)
         {
-            _artistService = artistService;
+            _artistsService = artistsService;
         }
 
         [HttpGet]
         [Route("GetAllArtistsAsync")]
         public async Task<IActionResult> GetAllArtistsAsync()
         {
-            var artists = await _artistService.GetArtistsAsync();
+            var artists = await _artistsService.GetArtistsAsync();
             return Ok(artists);
         }
+
 
         [HttpPost]
-        [Route("CreateArtist")]
-        public async Task<IActionResult> CreateArtist(Artist newArtist)
+        [Route("CreateArtistAsync")]
+        public async Task<IActionResult> CreateArtistAsync(Artist artist)
         {
-            await _artistService.CreateArtist(newArtist);
-            var artists = await _artistService.GetArtistsAsync();
-            return Ok(artists);
+            var result = await _artistsService.CreateArtist(artist);
+            return Ok(result);
         }
 
+        [HttpPatch]
+        [Route("UpdateArtistAsync")]
+        public async Task<IActionResult> UpdateArtistAsync(Artist artist)
+        {
+            return Ok();
+        }
     }
 }
